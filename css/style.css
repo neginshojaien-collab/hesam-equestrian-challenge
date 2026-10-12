@@ -752,3 +752,30 @@ input:focus {
     transition-duration: .01ms !important;
   }
 }
+/* FIX FULL SCREEN BACKGROUNDS */
+
+.scene.photo {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+#intro .scene {
+  background-image: url("../assets/images/hesam-hero-poster.png");
+}
+
+#horses .scene {
+  background-image: url("../assets/images/hesam-portrait.png");
+}
+
+#ride .scene {
+  background-image: url("../assets/images/hesam-rider-action.png");
+}
+
+#knowledge .scene {
+  background-image: url("../assets/images/hesam-rider-action.png");
+}
+
+#result .scene {
+  background-image: url("../assets/images/hesam-champion-result.png");
+}
