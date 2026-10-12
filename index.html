@@ -3,34 +3,34 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <meta name="theme-color" content="#080d19"><meta name="description" content="HESAM EQUESTRIAN CHALLENGE — بازی موبایلی سوارکاری">
-<title>HESAM EQUESTRIAN CHALLENGE</title><link rel="preload" href="assets/images/hesam-hero-poster.webp" as="image"><link rel="stylesheet" href="css/style.css">
+<title>HESAM EQUESTRIAN CHALLENGE</title><link rel="preload" href="assets/images/hesam-hero-poster.png" as="image"><link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <main id="app">
  <section class="screen active" id="intro" aria-label="صفحه شروع">
-  <div class="scene photo" style="--scene:url('assets/images/hesam-hero-poster.webp')"></div><div class="shade intro-shade"></div>
+  <div class="scene photo" style="--scene:url('assets/images/hesam-hero-poster.png')"></div><div class="shade intro-shade"></div>
   <div class="topbar"><div class="brand-icon">♞</div><div class="small-brand">HESAM <span>EC</span></div><button class="sound" id="soundBtn" title="روشن/خاموش کردن صدا" aria-label="صدا">♫</button></div>
   <div class="intro-bottom"><div class="kicker">THE ULTIMATE RIDING EXPERIENCE</div><h1>HESAM<br><em>EQUESTRIAN</em><br>CHALLENGE</h1><p>جرئت داری وارد میدان بشی؟</p><input id="playerName" maxlength="22" autocomplete="name" placeholder="اسم سوارکار" aria-label="نام سوارکار"><button class="primary" data-go="horses">شروع چالش <span>←</span></button><div class="hint">◈ طراحی‌شده برای موبایل ◈</div></div>
  </section>
  <section class="screen" id="horses" aria-label="انتخاب اسب">
-  <div class="scene photo" style="--scene:url('assets/images/hesam-portrait.webp')"></div><div class="shade"></div>
+  <div class="scene photo" style="--scene:url('assets/images/hesam-portrait.png')"></div><div class="shade"></div>
   <div class="topbar"><button class="back" data-go="intro">→</button><div class="step">01 <span>/ 03</span></div><div class="small-brand">CHOOSE YOUR HORSE</div></div>
   <div class="bottom-layout"><div class="kicker">PICK YOUR PARTNER</div><h2>اسب تو، قدرت تو.</h2><div class="horse-grid" id="horseGrid"></div><button class="primary" id="horseNext">ورود به میدان <span>←</span></button></div>
  </section>
  <section class="screen" id="ride" aria-label="مسابقه">
-  <div class="scene photo arena" style="--scene:url('assets/images/hesam-rider-action.webp')"></div><div class="shade game-shade"></div>
+  <div class="scene photo arena" style="--scene:url('assets/images/hesam-rider-action.png')"></div><div class="shade game-shade"></div>
   <div class="topbar"><button class="back" id="quitBtn" aria-label="بازگشت">✕</button><div class="hud"><div><small>امتیاز</small><strong id="score">0</strong></div><div><small>زمان</small><strong id="timer">45</strong></div><div><small>انرژی</small><strong id="energy">100</strong></div></div></div>
   <div class="game-info"><div class="pill" id="roundLabel">ROUND 1 · PRECISION</div><div id="gameToast" class="toast">برای عبور، در زمان مناسب بپر!</div></div>
   <div class="track" id="track"><div class="track-glow"></div><div class="hit-zone"><span>JUMP ZONE</span></div><div id="obstacle" class="obstacle" aria-hidden="true">┃<span>━</span>┃</div><div class="track-base"></div></div>
   <div class="controls"><div class="progress"><span id="progressText">مانع 1 / 12</span><div class="bar"><i id="progressBar"></i></div></div><div class="control-row"><button id="boostBtn" class="control boost">⚡<small>BOOST</small></button><button id="jumpBtn" class="control jump">↑<small>JUMP</small></button></div><div class="micro">مانع را روی خط نورانی نگه دار و JUMP بزن</div></div>
  </section>
  <section class="screen" id="knowledge" aria-label="چالش دانش سوارکاری">
-  <div class="scene photo" style="--scene:url('assets/images/hesam-rider-action.webp')"></div><div class="shade knowledge-shade"></div>
+  <div class="scene photo" style="--scene:url('assets/images/hesam-rider-action.png')"></div><div class="shade knowledge-shade"></div>
   <div class="topbar"><div class="brand-icon">♞</div><div class="step">FINAL <span>CHALLENGE</span></div></div>
   <div class="bottom-layout"><div class="kicker">RIDER INSTINCT</div><h2>تصمیم یک حرفه‌ای</h2><div class="quiz-counter" id="quizCounter">1 / 3</div><h3 id="question"></h3><div id="answers" class="answers"></div><div class="micro" id="quizFeedback">انتخابت روی نتیجه نهایی اثر دارد.</div></div>
  </section>
  <section class="screen" id="result" aria-label="نتیجه نهایی">
-  <div class="scene photo" style="--scene:url('assets/images/hesam-champion-result.webp')"></div><div class="shade result-shade"></div>
+  <div class="scene photo" style="--scene:url('assets/images/hesam-champion-result.png')"></div><div class="shade result-shade"></div>
   <div class="topbar"><div class="brand-icon">♛</div><div class="small-brand">HESAM CHALLENGE</div></div>
   <div class="result-bottom"><div class="kicker">MISSION COMPLETE</div><h2 id="resultRank">ELITE RIDER</h2><div class="big-score"><span id="finalScore">0</span><small>/100</small></div><div id="resultName" class="result-name"></div><div class="result-stats"><div>🎯 دقت <b id="statPrecision">0%</b></div><div>⚡ سرعت <b id="statSpeed">0%</b></div><div>🧠 دانش <b id="statKnowledge">0%</b></div></div><div class="result-actions"><button class="primary" id="shareBtn">اشتراک نتیجه ↗</button><button class="secondary" id="copyBtn">کپی گزارش</button><button class="secondary" id="restartBtn">بازی دوباره ↺</button></div><div id="shareNotice" class="micro">برای فرستادن نتیجه، گزینه اشتراک یا کپی را بزن.</div></div>
  </section>
