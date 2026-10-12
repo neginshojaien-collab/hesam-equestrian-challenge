@@ -1,26 +1,66 @@
+/* ==========================================
+   HESAM EQUESTRIAN CHALLENGE
+   COMPLETE MOBILE GAME STYLESHEET
+   VERSION 2.0
+========================================== */
+
+
+/* ==========================================
+   1. COLORS & VARIABLES
+========================================== */
+
 :root {
   --orange: #ff791e;
+  --orange-dark: #e85b0c;
   --blue: #238bff;
   --gold: #efc47c;
+  --gold-light: #ffe3a8;
+
   --ink: #080d19;
+  --navy: #101827;
+  --dark: #050913;
+
   --white: #f6f5f1;
   --muted: #b9c0d1;
+
+  --glass: rgba(9, 15, 28, 0.78);
+  --border: rgba(255, 255, 255, 0.2);
 }
+
+
+/* ==========================================
+   2. RESET
+========================================== */
 
 * {
   box-sizing: border-box;
 }
 
-html, body {
+html {
   margin: 0;
+  padding: 0;
+  width: 100%;
   height: 100%;
-  background: var(--ink);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  width: 100%;
+  min-height: 100%;
+
+  background: var(--dark);
   color: var(--white);
+
   font-family: Tahoma, Arial, sans-serif;
+
+  overflow: hidden;
   overscroll-behavior: none;
 }
 
-button, input {
+button,
+input {
   font: inherit;
 }
 
@@ -29,284 +69,674 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
-#app {
-  height: 100dvh;
-  min-height: 560px;
-  position: relative;
-  overflow: hidden;
+button:active {
+  transform: scale(0.97);
 }
+
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 3px;
+}
+
+
+/* ==========================================
+   3. MAIN GAME CONTAINER
+========================================== */
+
+#app {
+  position: relative;
+
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+
+  min-height: 0;
+
+  overflow: hidden;
+
+  background: var(--dark);
+  isolation: isolate;
+}
+
+
+/* ==========================================
+   4. GAME SCREENS
+========================================== */
 
 .screen {
   display: none;
+
   position: absolute;
-  inset: 0;
-  isolation: isolate;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
   overflow: hidden;
+
+  background: var(--dark);
+
+  isolation: isolate;
 }
 
 .screen.active {
   display: block;
-  animation: fade .42s ease-out;
+  animation: screenFade 0.5s ease-out;
 }
 
-/* FULL SCREEN BACKGROUNDS */
 
-.scene, .shade {
+/* ==========================================
+   5. FULL SCREEN IMAGE SYSTEM
+   IMPORTANT IMAGE FIX
+========================================== */
+
+/*
+   Images are real full-screen backgrounds.
+
+   They are NOT image cards.
+
+   Layer order:
+   0 = Image
+   1 = Dark overlay
+   2 = Game interface
+*/
+
+.scene {
   position: absolute;
+
   inset: 0;
-  z-index: -2;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 0;
+
+  pointer-events: none;
 }
 
-.photo {
-  background-image: var(--scene);
-  background-position: center 37%;
-  background-repeat: no-repeat;
+.scene.photo {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
   background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  z-index: 0;
+
   transform: scale(1.015);
 }
 
+
+/* ==========================================
+   6. EXACT GITHUB IMAGE PATHS
+========================================== */
+
+/* INTRO SCREEN */
+
+#intro .scene.photo {
+  background-image:
+    url("../assets/images/hesam-hero-poster.png") !important;
+
+  background-size: cover !important;
+
+  background-position: center 30% !important;
+}
+
+
+/* HORSE SELECTION */
+
+#horses .scene.photo {
+  background-image:
+    url("../assets/images/hesam-portrait.png") !important;
+
+  background-size: cover !important;
+
+  background-position: center 25% !important;
+}
+
+
+/* RIDING GAME */
+
+#ride .scene.photo {
+  background-image:
+    url("../assets/images/hesam-rider-action.png") !important;
+
+  background-size: cover !important;
+
+  background-position: center 40% !important;
+}
+
+
+/* KNOWLEDGE CHALLENGE */
+
+#knowledge .scene.photo {
+  background-image:
+    url("../assets/images/hesam-rider-action.png") !important;
+
+  background-size: cover !important;
+
+  background-position: center 35% !important;
+}
+
+
+/* FINAL RESULT */
+
+#result .scene.photo {
+  background-image:
+    url("../assets/images/hesam-champion-result.png") !important;
+
+  background-size: cover !important;
+
+  background-position: center 28% !important;
+}
+
+
+/* ==========================================
+   7. CINEMATIC OVERLAY
+========================================== */
+
 .shade {
-  z-index: -1;
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 1;
+
+  pointer-events: none;
+
   background: linear-gradient(
     180deg,
-    rgba(5,8,16,.52),
-    rgba(5,8,16,.08) 36%,
-    rgba(5,8,16,.75) 71%,
-    #080d19 100%
+    rgba(5, 9, 19, 0.16) 0%,
+    rgba(5, 9, 19, 0.04) 24%,
+    rgba(5, 9, 19, 0.12) 44%,
+    rgba(5, 9, 19, 0.45) 65%,
+    rgba(5, 9, 19, 0.93) 100%
   );
 }
+
+
+/* INTRO OVERLAY */
 
 .intro-shade {
   background: linear-gradient(
     180deg,
-    rgba(3,7,14,.32),
-    rgba(3,7,14,.08) 30%,
-    rgba(4,8,16,.42) 55%,
-    #080d19 96%
+    rgba(4, 8, 16, 0.12) 0%,
+    rgba(4, 8, 16, 0.02) 25%,
+    rgba(4, 8, 16, 0.04) 43%,
+    rgba(4, 8, 16, 0.55) 65%,
+    rgba(4, 8, 16, 0.97) 100%
   );
 }
 
-/* TOP BAR */
+
+/* GAME OVERLAY */
+
+.game-shade {
+  background: linear-gradient(
+    180deg,
+    rgba(4, 7, 15, 0.55) 0%,
+    rgba(4, 7, 15, 0.04) 30%,
+    rgba(4, 7, 15, 0.06) 55%,
+    rgba(4, 7, 15, 0.88) 100%
+  );
+}
+
+
+/* KNOWLEDGE OVERLAY */
+
+.knowledge-shade {
+  background: linear-gradient(
+    180deg,
+    rgba(4, 7, 15, 0.18) 0%,
+    rgba(4, 7, 15, 0.05) 35%,
+    rgba(4, 7, 15, 0.73) 63%,
+    rgba(4, 7, 15, 0.97) 100%
+  );
+}
+
+
+/* RESULT OVERLAY */
+
+.result-shade {
+  background: linear-gradient(
+    180deg,
+    rgba(4, 7, 15, 0.14) 0%,
+    rgba(4, 7, 15, 0.02) 30%,
+    rgba(4, 7, 15, 0.65) 66%,
+    rgba(4, 7, 15, 0.97) 100%
+  );
+}
+
+
+/* ==========================================
+   8. GAME INTERFACE LAYER
+========================================== */
+
+.screen > :not(.scene):not(.shade) {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* ==========================================
+   9. TOP BAR
+========================================== */
 
 .topbar {
-  position: absolute;
-  z-index: 4;
+  position: absolute !important;
+
   top: 0;
-  right: 0;
   left: 0;
+  right: 0;
+
+  z-index: 5 !important;
+
   display: flex;
-  gap: 12px;
   align-items: center;
-  padding: calc(env(safe-area-inset-top) + 17px) 20px 12px;
+
+  gap: 12px;
+
   direction: ltr;
+
+  padding:
+    calc(env(safe-area-inset-top) + 17px)
+    20px
+    12px;
 }
 
 .brand-icon {
-  height: 37px;
-  width: 37px;
+  width: 39px;
+  height: 39px;
+
   display: grid;
   place-items: center;
-  border: 1px solid #b3936480;
-  background: #090e18a8;
+
   color: var(--gold);
+
   font-size: 28px;
-  border-radius: 10px;
+
+  border-radius: 11px;
+
+  border: 1px solid rgba(239, 196, 124, 0.5);
+
+  background: rgba(6, 11, 21, 0.8);
+
+  box-shadow: 0 0 18px rgba(239, 196, 124, 0.12);
 }
 
 .small-brand {
-  font: 700 12px Arial, sans-serif;
+  color: white;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 13px;
+  font-weight: 900;
+
   letter-spacing: 2px;
-  text-shadow: 0 2px 10px #000;
+
+  text-shadow: 0 3px 12px black;
 }
 
 .small-brand span {
   color: var(--orange);
 }
 
-.sound, .back {
+.sound,
+.back {
   margin-left: auto;
-  color: #fff;
-  background: #09111dbb;
-  border: 1px solid #ffffff44;
-  border-radius: 12px;
-  height: 39px;
-  min-width: 39px;
-  font-size: 21px;
+
+  min-width: 43px;
+  height: 43px;
+
+  border-radius: 13px;
+
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  background: rgba(6, 12, 23, 0.8);
+
+  color: white;
+
+  font-size: 20px;
+
+  backdrop-filter: blur(8px);
 }
 
 .step {
   margin-left: auto;
-  font: 900 22px Arial, sans-serif;
+
   color: var(--orange);
+
+  font-size: 22px;
+  font-weight: 900;
 }
 
 .step span {
+  color: white;
   font-size: 12px;
-  color: #dedbe0;
 }
 
-/* BOTTOM CONTENT */
+
+/* ==========================================
+   10. BOTTOM CONTENT LAYOUT
+========================================== */
 
 .intro-bottom,
 .bottom-layout,
 .result-bottom {
-  position: absolute;
-  bottom: 0;
+  position: absolute !important;
+
   left: 0;
   right: 0;
-  padding: 0 24px calc(env(safe-area-inset-bottom) + 29px);
+  bottom: 0;
+
+  z-index: 4 !important;
+
+  width: 100%;
   max-width: 560px;
+
   margin: 0 auto;
+
+  padding:
+    0
+    24px
+    calc(env(safe-area-inset-bottom) + 25px);
+
   display: flex;
+
   flex-direction: column;
+
   align-items: stretch;
 }
 
 .kicker {
   color: var(--gold);
-  font: bold 10px Arial, sans-serif;
-  letter-spacing: 2.3px;
-  direction: ltr;
-  text-align: right;
-  text-shadow: 0 3px 9px #000;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  text-shadow: 0 3px 10px black;
 }
 
+
+/* ==========================================
+   11. INTRO SCREEN
+========================================== */
+
 .intro-bottom h1 {
-  margin: 9px 0 10px;
-  direction: ltr;
-  text-align: left;
-  font: 900 clamp(31px,8.2vw,57px)/.98 Arial, sans-serif;
+  margin: 10px 0 13px;
+
+  color: white;
+
+  font-family: Arial, sans-serif;
+
+  font-size: clamp(32px, 8vw, 55px);
+
+  font-weight: 900;
+
+  line-height: 1.02;
+
   letter-spacing: 1px;
-  text-shadow: 0 4px 22px #000;
+
+  text-shadow: 0 5px 24px black;
 }
 
 .intro-bottom h1 em {
-  font-style: normal;
   color: var(--gold);
-  font-size: .74em;
-  letter-spacing: 1.5px;
+
+  font-style: normal;
+
+  font-size: 0.78em;
 }
 
 .intro-bottom p {
-  margin: 1px 0 14px;
-  color: #edeeef;
+  margin: 2px 0 15px;
+
+  color: #f0eee9;
+
   font-size: 13px;
+
+  line-height: 1.8;
+
+  text-shadow: 0 2px 8px black;
 }
 
+
+/* ==========================================
+   12. INPUT FIELDS
+========================================== */
+
 input {
-  border: 1px solid #ffffff4d;
-  outline: 0;
-  background: #121b2bbb;
-  color: #fff;
-  padding: 15px 17px;
-  border-radius: 15px;
   width: 100%;
-  margin-bottom: 10px;
+
+  padding: 16px 18px;
+
+  margin-bottom: 12px;
+
+  color: white;
+
+  background: rgba(10, 18, 34, 0.88);
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+
+  border-radius: 16px;
+
+  outline: none;
+
+  backdrop-filter: blur(10px);
+
+  font-size: 15px;
+}
+
+input::placeholder {
+  color: #9ba6bd;
 }
 
 input:focus {
   border-color: var(--orange);
+
+  box-shadow: 0 0 15px rgba(255, 121, 30, 0.2);
 }
 
-/* BUTTONS */
+
+/* ==========================================
+   13. PRIMARY BUTTON
+========================================== */
 
 .primary {
+  min-height: 55px;
+
+  width: 100%;
+
   display: flex;
+
   align-items: center;
   justify-content: center;
+
   gap: 12px;
-  background: linear-gradient(105deg,#fd8c2e,#f75a0d);
-  box-shadow: 0 5px 28px #ec650c55;
-  border: 0;
-  color: #0d121a;
-  border-radius: 15px;
-  min-height: 53px;
+
+  border: none;
+
+  border-radius: 16px;
+
+  background: linear-gradient(
+    110deg,
+    #ff9a36,
+    #ff6815
+  );
+
+  color: #10151e;
+
   font-size: 16px;
   font-weight: 900;
+
+  box-shadow:
+    0 6px 26px rgba(255, 105, 20, 0.4),
+    inset 0 1px 2px rgba(255, 255, 255, 0.4);
+
+  transition: transform 0.15s ease;
 }
 
 .primary span {
-  font-size: 25px;
+  font-size: 24px;
 }
 
-.hint, .micro {
-  text-align: center;
-  font-size: 10px;
-  color: #bac3d5;
+.primary:active {
+  transform: scale(0.97);
+}
+
+.hint,
+.micro {
   margin-top: 12px;
+
+  color: #bec7d7;
+
+  font-size: 10px;
+
+  text-align: center;
+
   line-height: 1.7;
 }
 
-.bottom-layout h2 {
-  font-size: clamp(26px,8vw,39px);
-  margin: 10px 0 18px;
-  text-shadow: 0 3px 10px #000;
-}
 
-/* HORSE SELECTION */
+/* ==========================================
+   14. HORSE SELECTION SCREEN
+========================================== */
+
+.bottom-layout h2 {
+  margin: 10px 0 17px;
+
+  color: white;
+
+  font-family: Arial, sans-serif;
+
+  font-size: clamp(26px, 8vw, 39px);
+
+  font-weight: 900;
+
+  text-shadow: 0 4px 16px black;
+}
 
 .horse-grid {
   display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 9px;
-  margin-bottom: 14px;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 10px;
+
+  margin-bottom: 15px;
 }
 
 .horse-card {
-  min-height: 110px;
-  border-radius: 16px;
-  background: #0b1724c9;
-  border: 1px solid #e9f0ff2f;
-  color: #fff;
-  text-align: right;
-  padding: 13px;
   position: relative;
+
+  min-height: 112px;
+
+  padding: 14px;
+
   overflow: hidden;
-  backdrop-filter: blur(5px);
+
+  color: white;
+
+  text-align: right;
+
+  border-radius: 17px;
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  background: rgba(8, 17, 32, 0.85);
+
+  backdrop-filter: blur(10px);
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .horse-card::after {
-  content: '♞';
+  content: "♞";
+
   position: absolute;
-  left: 6px;
-  bottom: -19px;
-  font-size: 97px;
-  color: #829dc51c;
-  transform: scaleX(-1);
+
+  left: 5px;
+  bottom: -20px;
+
+  color: rgba(151, 183, 237, 0.13);
+
+  font-size: 100px;
+
+  pointer-events: none;
 }
 
 .horse-card.selected {
   border: 2px solid var(--orange);
-  background: #1a1c28e8;
-  box-shadow: inset 0 0 28px #ff7a1d1d;
+
+  background: rgba(32, 28, 38, 0.93);
+
+  box-shadow:
+    0 0 20px rgba(255, 121, 30, 0.2),
+    inset 0 0 20px rgba(255, 121, 30, 0.1);
 }
 
 .horse-title {
+  position: relative;
+
+  z-index: 1;
+
+  font-family: Arial, sans-serif;
+
   font-size: 18px;
   font-weight: 900;
-  position: relative;
-  z-index: 1;
 }
 
 .horse-sub {
-  font: 10px Arial, sans-serif;
-  color: var(--gold);
-  letter-spacing: 1px;
   display: block;
-  margin: 5px 0 12px;
+
+  position: relative;
+
+  z-index: 1;
+
+  margin: 6px 0 13px;
+
+  color: var(--gold);
+
+  font-size: 10px;
+
+  letter-spacing: 1px;
 }
 
 .mini-track {
   width: 100%;
-  background: #75859b44;
-  border-radius: 8px;
-  height: 4px;
+  height: 5px;
+
   overflow: hidden;
+
+  background: rgba(190, 204, 230, 0.25);
+
+  border-radius: 10px;
 }
 
 .mini-track i {
   display: block;
+
   height: 100%;
+
   background: linear-gradient(
     90deg,
     var(--blue),
@@ -314,468 +744,271 @@ input:focus {
   );
 }
 
-/* GAME HUD */
+
+/* ==========================================
+   15. GAME HUD
+========================================== */
 
 .hud {
   margin-left: auto;
+
   display: flex;
-  gap: 15px;
+
+  gap: 14px;
+
   direction: rtl;
-  background: #050913bb;
+
+  padding: 9px 12px;
+
   border-radius: 15px;
-  padding: 8px 11px;
-  backdrop-filter: blur(5px);
+
+  background: rgba(5, 9, 19, 0.82);
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  backdrop-filter: blur(10px);
 }
 
 .hud > div {
   display: flex;
+
   flex-direction: column;
-  gap: 1px;
+
   min-width: 46px;
+
   text-align: center;
+
+  gap: 3px;
 }
 
 .hud small {
+  color: #c7d0df;
+
   font-size: 10px;
-  color: #c1c8db;
 }
 
 .hud strong {
-  font: 900 19px Arial, sans-serif;
+  color: white;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 19px;
+
+  font-weight: 900;
 }
+
+
+/* ==========================================
+   16. RIDING ARENA
+========================================== */
 
 .arena {
-  background-position: center 45%;
-}
-
-.game-shade {
-  background: linear-gradient(
-    180deg,
-    #050913af 0%,
-    #0509130a 27%,
-    #04070d1a 55%,
-    #04070de8 91%
-  );
+  background-position: center 40%;
 }
 
 .game-info {
-  position: absolute;
-  top: calc(env(safe-area-inset-top) + 94px);
+  position: absolute !important;
+
+  top: calc(env(safe-area-inset-top) + 100px);
+
   left: 14px;
   right: 14px;
+
+  z-index: 4 !important;
+
   text-align: center;
 }
 
 .pill {
   display: inline-block;
-  background: #070d19c9;
-  color: var(--gold);
-  border: 1px solid #caa76c77;
+
+  padding: 9px 15px;
+
   border-radius: 30px;
-  padding: 8px 14px;
-  font: 800 11px Arial, sans-serif;
-  letter-spacing: 1.5px;
+
+  background: rgba(5, 11, 23, 0.85);
+
+  border: 1px solid rgba(239, 196, 124, 0.5);
+
+  color: var(--gold);
+
+  font-size: 11px;
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+  backdrop-filter: blur(10px);
 }
 
 .toast {
-  margin-top: 9px;
-  font-size: 13px;
-  text-shadow: 0 3px 8px #000;
-  font-weight: 800;
   min-height: 25px;
+
+  margin-top: 12px;
+
+  color: white;
+
+  font-size: 14px;
+
+  font-weight: 900;
+
+  text-shadow: 0 3px 12px black;
 }
 
-/* OBSTACLE TRACK */
+
+/* ==========================================
+   17. OBSTACLE TRACK
+========================================== */
 
 .track {
-  position: absolute;
+  position: absolute !important;
+
   left: 0;
   right: 0;
+
   bottom: 27%;
-  height: 104px;
+
+  height: 110px;
+
+  z-index: 3 !important;
+
   overflow: hidden;
+
   pointer-events: none;
 }
 
 .track-base {
   position: absolute;
-  bottom: 2px;
+
+  bottom: 3px;
   left: 0;
   right: 0;
+
   height: 5px;
+
   background: linear-gradient(
     90deg,
     transparent,
-    #e6b3709c,
+    rgba(255, 188, 102, 0.85),
     transparent
   );
-  box-shadow: 0 0 23px #fe7b24a1;
+
+  box-shadow: 0 0 22px rgba(255, 121, 30, 0.6);
 }
 
 .hit-zone {
   position: absolute;
+
   left: 16%;
-  bottom: 5px;
+
+  bottom: 6px;
+
   width: 18%;
-  height: 85px;
-  border-left: 2px dashed #ff8b24;
-  border-right: 2px dashed #ff8b24;
-  background: #f878171a;
-  box-shadow: 0 0 22px #ff7c2522;
+  height: 87px;
+
   display: flex;
-  align-items: flex-start;
+
   justify-content: center;
+  align-items: flex-start;
+
+  border-left: 2px dashed var(--orange);
+  border-right: 2px dashed var(--orange);
+
+  background: rgba(255, 121, 30, 0.09);
+
+  box-shadow: 0 0 22px rgba(255, 121, 30, 0.2);
 }
 
 .hit-zone span {
-  font: 800 9px Arial, sans-serif;
-  color: #ffd5ad;
-  white-space: nowrap;
   margin-top: 9px;
+
+  color: #ffdfbc;
+
+  font-size: 10px;
+
+  font-weight: 900;
+
+  white-space: nowrap;
 }
 
 .obstacle {
   position: absolute;
-  bottom: 8px;
+
   left: 110%;
-  color: #e3ba79;
-  text-shadow: 0 0 7px #f77315;
-  font-size: 65px;
-  font-weight: bold;
-  line-height: 1;
+  bottom: 9px;
+
   transform: translateX(-50%);
+
+  color: var(--gold);
+
+  font-size: 65px;
+
+  font-weight: 900;
+
+  line-height: 1;
+
+  text-shadow: 0 0 12px var(--orange);
+
   will-change: left;
 }
 
 .obstacle span {
   position: absolute;
+
   left: 4px;
   top: 21px;
-  color: #e5c7a5;
+
+  color: #e8c7a3;
 }
 
 .track-glow {
   position: absolute;
+
   inset: 0;
+
   background: linear-gradient(
     180deg,
     transparent,
-    #060b1891
+    rgba(5, 10, 20, 0.35)
   );
 }
 
-/* MOBILE CONTROLS */
+
+/* ==========================================
+   18. MOBILE GAME CONTROLS
+========================================== */
 
 .controls {
-  position: absolute;
-  bottom: calc(env(safe-area-inset-bottom) + 12px);
+  position: absolute !important;
+
   left: 16px;
   right: 16px;
+
+  bottom: calc(env(safe-area-inset-bottom) + 12px);
+
+  z-index: 5 !important;
 }
 
 .progress {
   display: flex;
+
   align-items: center;
+
   gap: 12px;
-  margin-bottom: 9px;
+
+  margin-bottom: 11px;
+
+  color: white;
+
   font-size: 11px;
-  color: #e8e7e3;
 }
 
 .bar {
   flex: 1;
-  height: 6px;
-  background: #fff3;
-  border-radius: 9px;
+
+  height: 7px;
+
   overflow: hidden;
-}
 
-.bar i {
-  display: block;
-  width: 0;
-  height: 100%;
-  background: var(--orange);
-  transition: width .2s;
-}
+  border-radius: 10px;
 
-.control-row {
-  display: flex;
-  direction: ltr;
-  gap: 12px;
-  justify-content: space-between;
-}
-
-.control {
-  border: 1px solid #ffffff40;
-  background: #081221d9;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: 32px;
-  font-weight: 900;
-  touch-action: manipulation;
-  user-select: none;
-  border-radius: 20px;
-  height: 88px;
-  width: 42%;
-  box-shadow: inset 0 1px 8px #ffffff14;
-}
-
-.control small {
-  font: bold 11px Arial, sans-serif;
-  letter-spacing: 1px;
-}
-
-.control.jump {
-  background: linear-gradient(
-    145deg,
-    #ff8a20,
-    #d85200
-  );
-  border-color: #fdb168;
-  box-shadow: 0 2px 23px #ff631f66;
-}
-
-.control:active {
-  transform: scale(.96);
-}
-
-/* QUIZ */
-
-.quiz-counter {
-  font-weight: 900;
-  color: var(--orange);
-  font-size: 13px;
-}
-
-.bottom-layout h3 {
-  font-size: 19px;
-  line-height: 1.8;
-  margin: 11px 0 19px;
-}
-
-.knowledge-shade {
-  background: linear-gradient(
-    180deg,
-    #03061366,
-    #060a1b13 26%,
-    #050a17ad 53%,
-    #060a15 94%
-  );
-}
-
-.answers {
-  display: grid;
-  gap: 11px;
-}
-
-.answer {
-  min-height: 62px;
-  text-align: right;
-  background: #101b2ade;
-  border: 1px solid #ffffff3b;
-  color: #fff;
-  border-radius: 15px;
-  padding: 15px;
-  font-size: 15px;
-  font-weight: 700;
-}
-
-.answer:active,
-.answer.chosen {
-  border-color: var(--orange);
-  background: #4a281fd9;
-}
-
-/* RESULT SCREEN */
-
-.result-shade {
-  background: linear-gradient(
-    180deg,
-    #0509127a,
-    #05091202 29%,
-    #0509127b 53%,
-    #060912fa 84%
-  );
-}
-
-.result-bottom {
-  padding-bottom: calc(env(safe-area-inset-bottom) + 14px);
-}
-
-.result-bottom h2 {
-  margin: 4px 0 0;
-  font: 900 29px Arial, sans-serif;
-  color: var(--gold);
-  letter-spacing: 1px;
-}
-
-.big-score {
-  font: 900 64px Arial, sans-serif;
-  text-shadow: 0 5px 20px #000;
-  line-height: 1.05;
-}
-
-.big-score small {
-  font-size: 20px;
-  color: #e4e5e9;
-}
-
-.result-name {
-  font-size: 13px;
-  color: #ece8e0;
-  margin: 8px 0;
-}
-
-.result-stats {
-  display: flex;
-  gap: 7px;
-  margin: 10px 0 13px;
-}
-
-.result-stats div {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  gap: 5px;
-  background: #0c1524dc;
-  border: 1px solid #ffffff2c;
-  border-radius: 12px;
-  padding: 10px 2px;
-  font-size: 11px;
-}
-
-.result-stats b {
-  font: 900 17px Arial, sans-serif;
-  color: var(--gold);
-}
-
-.result-actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 9px;
-}
-
-.result-actions .primary {
-  grid-column: 1 / -1;
-}
-
-.secondary {
-  min-height: 44px;
-  border: 1px solid #e3af6f77;
-  background: #111b2ce0;
-  color: #ffdeb2;
-  border-radius: 12px;
-  font-weight: 800;
-}
-
-.result-bottom .micro {
-  margin-top: 7px;
-}
-
-/* ANIMATIONS */
-
-@keyframes fade {
-  from {
-    opacity: 0;
-    transform: scale(1.01);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* TABLET / DESKTOP */
-
-@media (min-width: 700px) {
-  #app {
-    width: min(100%, 550px);
-    height: min(950px, 100dvh);
-    min-height: 600px;
-    margin: auto;
-    box-shadow: 0 0 90px #000;
-  }
-
-  body {
-    display: grid;
-    place-items: center;
-    background: #050913;
-  }
-}
-
-/* SMALL MOBILE SCREENS */
-
-@media (max-height: 710px) {
-  .intro-bottom {
-    padding-bottom: 18px;
-  }
-
-  .intro-bottom h1 {
-    font-size: 34px;
-  }
-
-  .horse-card {
-    min-height: 89px;
-  }
-
-  .bottom-layout h2 {
-    margin: 5px 0 10px;
-  }
-
-  .result-bottom h2 {
-    font-size: 24px;
-  }
-
-  .big-score {
-    font-size: 48px;
-  }
-
-  .control {
-    height: 67px;
-  }
-
-  .track {
-    bottom: 24%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *:before,
-  *:after {
-    animation-duration: .01ms !important;
-    transition-duration: .01ms !important;
-  }
-}
-/* FIX FULL SCREEN BACKGROUNDS */
-
-.scene.photo {
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-
-#intro .scene {
-  background-image: url("../assets/images/hesam-hero-poster.png");
-}
-
-#horses .scene {
-  background-image: url("../assets/images/hesam-portrait.png");
-}
-
-#ride .scene {
-  background-image: url("../assets/images/hesam-rider-action.png");
-}
-
-#knowledge .scene {
-  background-image: url("../assets/images/hesam-rider-action.png");
-}
-
-#result .scene {
-  background-image: url("../assets/images/hesam-champion-result.png");
-}
+ 
